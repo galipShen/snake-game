@@ -5,6 +5,7 @@ import { PanGestureHandler } from "react-native-gesture-handler";
 import { GestureEventType, Direction, Coordinate } from "../types/types";
 import Snake from "./Snake";
 import { checkGameOver } from "../utils/checkGameOver";
+import Fruit from "./Fruit";
 
 export default function Game(): JSX.Element {
 
@@ -37,7 +38,9 @@ export default function Game(): JSX.Element {
         // game over func
         if (checkGameOver(snakeHead, GAME_BOUNDS)) {
             setIsGameOver((prev) => !prev)     //setIsGameOver(true) neden böyle kullanmadık
-            return   /// return to prevent 
+            // bence önceki state i bilmezsek ve ona göre çalışmazsa sorun çıkar, bi önceki duruma göre devem etmiş olmayız
+
+            return   /// return to prevent keep continue
         }
         switch (direction) {
             case Direction.Up:
@@ -92,6 +95,7 @@ export default function Game(): JSX.Element {
                 {/* <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} /> */}
                 <View style={styles.boundaries}>
                     <Snake snake={snake} />
+                    <Fruit x={food.x} y={food.y} />
                 </View>
             </SafeAreaView>
         </PanGestureHandler>
