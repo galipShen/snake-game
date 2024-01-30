@@ -21,6 +21,39 @@ export default function Game(): JSX.Element {
     const [isGameOver, setIsGameOver] = React.useState<boolean>(false)
     const [isPaused, setIsPaused] = React.useState<boolean>(false)
 
+    React.useEffect(() => {
+        if (!isGameOver) {
+            const intervalId = setInterval(() => {
+                !isPaused && moveSnake()
+            }, MOVE_INTERVAL)
+            return () => clearInterval(intervalId)   /// buraya bak çlışma mantığına 
+        }
+    }, [isGameOver, isPaused, snake])  // neden snake objesini alıyoruz, fonksiyondaki diğer tüm objeler ondan türetildiği için mi , başlangıç durumunu barındırdığı için mi 
+
+    const moveSnake = () => {
+        const snakeHead = snake[0];  // buradaki 0 ilk arr mi , yada her iki x ve y ye 0 vermek mi , hayır ama sor 
+        const newHead = { ...snakeHead }
+
+        switch (direction) {
+            case Direction.Up:
+                newHead.y -= 1
+                break;
+            case Direction.Down:
+                newHead.y += 1
+                break;
+            case Direction.Right:
+                newHead.x += 1
+                break;
+            case Direction.Left:
+                newHead.x -= 1
+                break;
+            default:
+                break;
+        }
+
+        setSnake([newHead, ...snake])
+    }
+
 
     const handleGesture = (event: GestureEventType) => {
         const { translationX, translationY } = event.nativeEvent
