@@ -4,6 +4,7 @@ import { Colors } from "../styles/colors";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { GestureEventType, Direction, Coordinate } from "../types/types";
 import Snake from "./Snake";
+import { checkGameOver } from "../utils/checkGameOver";
 
 export default function Game(): JSX.Element {
 
@@ -33,7 +34,11 @@ export default function Game(): JSX.Element {
     const moveSnake = () => {
         const snakeHead = snake[0];  // buradaki 0 ilk arr mi , yada her iki x ve y ye 0 vermek mi , hayır ama sor 
         const newHead = { ...snakeHead }
-
+        // game over func
+        if (checkGameOver(snakeHead, GAME_BOUNDS)) {
+            setIsGameOver((prev) => !prev)     //setIsGameOver(true) neden böyle kullanmadık
+            return   /// return to prevent 
+        }
         switch (direction) {
             case Direction.Up:
                 newHead.y -= 1
@@ -50,6 +55,9 @@ export default function Game(): JSX.Element {
             default:
                 break;
         }
+        // if eats food 
+        // grow snake 
+        // otherwise keep same like below
 
         setSnake([newHead, ...snake.slice(0, -1)])
     }
@@ -81,7 +89,7 @@ export default function Game(): JSX.Element {
     return (
         <PanGestureHandler onGestureEvent={handleGesture} >
             <SafeAreaView style={styles.container} >
-                {/* <StatusBar /> */}
+                {/* <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} /> */}
                 <View style={styles.boundaries}>
                     <Snake snake={snake} />
                 </View>
