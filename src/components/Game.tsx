@@ -51,7 +51,7 @@ export default function Game(): JSX.Element {
                 break;
         }
 
-        setSnake([newHead, ...snake])
+        setSnake([newHead, ...snake.slice(0, -1)])
     }
 
 
