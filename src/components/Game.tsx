@@ -63,7 +63,6 @@ export default function Game(): JSX.Element {
         }
         if (checkEatsFruit(newHead, food, 2)) {
             setSnake([newHead, ...snake])  // neden newHead
-            // get another position for the food-with random
             setFood(randomFruitPosition(GAME_BOUNDS.xMax, GAME_BOUNDS.yMax))
             setScore(score + SCORE_INCREMENT)
         } else {
