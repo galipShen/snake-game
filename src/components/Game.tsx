@@ -5,6 +5,7 @@ import { PanGestureHandler } from "react-native-gesture-handler";
 import { GestureEventType, Direction, Coordinate } from "../types/types";
 import Snake from "./Snake";
 import { checkGameOver } from "../utils/checkGameOver";
+import { checkEatsFruit } from "../utils/checkEatsFruit";
 import Fruit from "./Fruit";
 
 export default function Game(): JSX.Element {
@@ -58,8 +59,12 @@ export default function Game(): JSX.Element {
             default:
                 break;
         }
-        // if eats food 
+        if (checkEatsFruit(newHead, food, 2)) {
+            setSnake([newHead, ...snake])
+
+        }
         // grow snake 
+        // if eats food 
         // otherwise keep same like below
 
         setSnake([newHead, ...snake.slice(0, -1)])
