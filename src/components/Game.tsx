@@ -7,6 +7,7 @@ import Snake from "./Snake";
 import { checkGameOver } from "../utils/checkGameOver";
 import { checkEatsFruit } from "../utils/checkEatsFruit";
 import Fruit from "./Fruit";
+import { randomFruitPosition } from "../utils/randomFruitPosition";
 
 export default function Game(): JSX.Element {
 
@@ -23,6 +24,7 @@ export default function Game(): JSX.Element {
     const [food, setFood] = React.useState<Coordinate>(FOOD_INITIAL_POSITION)
     const [isGameOver, setIsGameOver] = React.useState<boolean>(false)
     const [isPaused, setIsPaused] = React.useState<boolean>(false)
+    const [score, setScore] = React.useState<number>(0)
 
     React.useEffect(() => {
         if (!isGameOver) {
@@ -60,14 +62,13 @@ export default function Game(): JSX.Element {
                 break;
         }
         if (checkEatsFruit(newHead, food, 2)) {
-            setSnake([newHead, ...snake])
-
+            setSnake([newHead, ...snake])  // neden newHead
+            // get another position for the food-with random
+            setFood(randomFruitPosition(GAME_BOUNDS.xMax, GAME_BOUNDS.yMax))
+            setScore(score + SCORE_INCREMENT)
+        } else {
+            setSnake([newHead, ...snake.slice(0, -1)])
         }
-        // grow snake 
-        // if eats food 
-        // otherwise keep same like below
-
-        setSnake([newHead, ...snake.slice(0, -1)])
     }
 
 
