@@ -37,13 +37,11 @@ export default function Game(): JSX.Element {
     }, [isGameOver, isPaused, snake])
 
     const moveSnake = () => {
-        const snakeHead = snake[0];  // buradaki 0 ilk arr mi , yada her iki x ve y ye 0 vermek mi , hayır ama sor 
+        const snakeHead = snake[0];
         const newHead = { ...snakeHead }
-        // game over func
         if (checkGameOver(snakeHead, GAME_BOUNDS)) {
             setIsGameOver((prev) => !prev)     //setIsGameOver(true) neden böyle kullanmadık
             // bence önceki state i bilmezsek ve ona göre çalışmazsa sorun çıkar, bi önceki duruma göre devem etmiş olmayız
-
             return   /// return to prevent keep continue
         }
         switch (direction) {
@@ -63,7 +61,7 @@ export default function Game(): JSX.Element {
                 break;
         }
         if (checkEatsFruit(newHead, food, 2)) {
-            setFood(randomFruitPosition(GAME_BOUNDS.xMax, GAME_BOUNDS.yMax)) //BUG-iki defa çalışıyor, tek görünmeli , 
+            setFood(randomFruitPosition(GAME_BOUNDS.xMax, GAME_BOUNDS.yMax))
             setSnake([newHead, ...snake])  // neden newHead //BUG- yılan x ve y ekseninde tersine dönmemeli  kendi içinden geçermiş gibi görünüyor
             setScore(score + SCORE_INCREMENT)
         } else {
@@ -74,36 +72,39 @@ export default function Game(): JSX.Element {
 
     const handleGesture = (event: GestureEventType) => {
         const { translationX, translationY } = event.nativeEvent
-        // console.log(translationX, translationY)
         if (Math.abs(translationX) > Math.abs(translationY)) {
             if (translationX > 0) {
-                //moveright
                 setDirection(Direction.Right)
             } else {
-                //moveleft
                 setDirection(Direction.Left)
             }
         } else {
             if (translationY > 0) {
-                //move down
                 setDirection(Direction.Down)
-
             } else {
-                //moveup
                 setDirection(Direction.Up)
             }
         }
+    }
+    const replay = () => {
+        setSnake(SNAKE_INITIAL_POSITION)
+        setFood(FOOD_INITIAL_POSITION)
+        setIsGameOver(false)
+        setScore(0)
+        setDirection(Direction.Right),
+            setIsPaused(false)
+    }
+    const pauseGame = () => {
+        setIsPaused(prev => !prev)
     }
 
     return (
         <PanGestureHandler onGestureEvent={handleGesture} >
             <SafeAreaView style={styles.container} >
-                <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} />
-                <Header>
-
+                <StatusBar barStyle={"light-content"} backgroundColor={Colors.primary} />
+                <Header replay={replay} isPaused={isPaused} score={score} pauseGame={pauseGame}>
                 </Header>
                 <View style={styles.boundaries}>
-
                     <Snake snake={snake} />
                     <Fruit x={food.x} y={food.y} />
                 </View>
@@ -124,6 +125,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.background,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
-        borderTopWidth: 10,
+
     }
 });

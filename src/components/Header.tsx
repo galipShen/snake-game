@@ -6,27 +6,26 @@ import { Colors } from "../styles/colors";
 
 
 interface HeaderProps {
-
+    replay: () => void;
+    isPaused: boolean;
+    pauseGame: () => void;
+    score: number;
 }
 
-export default function Header({ }: HeaderProps): JSX.Element {
+export default function Header({ replay, isPaused, score, pauseGame }: HeaderProps): JSX.Element {
     return (
         <View style={styles.container} >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={replay} >
                 <MaterialIcons name="replay-circle-filled" size={24} color={Colors.primary} />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={pauseGame}
+            >
                 <FontAwesome5
-                    name="play-circle"
-                    //play-circle
-                    //yukarısi bool ile isPaused state i ile deişecek
-
+                    name={isPaused ? "play-circle" : "pause-circle"}
                     size={24} color={Colors.primary} />
-
-
             </TouchableOpacity>
-            {/* score prop olarak game içinden geelcek */}
-            <Text style={styles.scoreText} >score</Text>
+            <Text style={styles.scoreText} >{score}</Text>
 
         </View>
     )
@@ -38,14 +37,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         backgroundColor: Colors.background,
         justifyContent: "space-between",
-        borderBottomWidth: 20,
-        borderBottomColor: Colors.primary,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        marginHorizontal: 20,
+        marginHorizontal: 12,
         alignItems: "center",
         marginTop: 20,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     scoreText: {
         fontSize: 25
