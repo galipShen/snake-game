@@ -8,6 +8,7 @@ import { checkGameOver } from "../utils/checkGameOver";
 import { checkEatsFruit } from "../utils/checkEatsFruit";
 import Fruit from "./Fruit";
 import { randomFruitPosition } from "../utils/randomFruitPosition";
+import Header from "./Header";
 
 export default function Game(): JSX.Element {
 
@@ -33,7 +34,7 @@ export default function Game(): JSX.Element {
             }, MOVE_INTERVAL)
             return () => clearInterval(intervalId)   /// buraya bak çlışma mantığına 
         }
-    }, [isGameOver, isPaused, snake])  // neden snake objesini alıyoruz, fonksiyondaki diğer tüm objeler ondan türetildiği için mi , başlangıç durumunu barındırdığı için mi 
+    }, [isGameOver, isPaused, snake])
 
     const moveSnake = () => {
         const snakeHead = snake[0];  // buradaki 0 ilk arr mi , yada her iki x ve y ye 0 vermek mi , hayır ama sor 
@@ -97,8 +98,12 @@ export default function Game(): JSX.Element {
     return (
         <PanGestureHandler onGestureEvent={handleGesture} >
             <SafeAreaView style={styles.container} >
-                {/* <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} /> */}
+                <StatusBar barStyle={"dark-content"} backgroundColor={"transparent"} />
+                <Header>
+
+                </Header>
                 <View style={styles.boundaries}>
+
                     <Snake snake={snake} />
                     <Fruit x={food.x} y={food.y} />
                 </View>
@@ -119,6 +124,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.background,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
-        borderTopWidth: 40,
+        borderTopWidth: 10,
     }
 });
