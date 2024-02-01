@@ -62,8 +62,8 @@ export default function Game(): JSX.Element {
                 break;
         }
         if (checkEatsFruit(newHead, food, 2)) {
-            setSnake([newHead, ...snake])  // neden newHead
-            setFood(randomFruitPosition(GAME_BOUNDS.xMax, GAME_BOUNDS.yMax))
+            setFood(randomFruitPosition(GAME_BOUNDS.xMax, GAME_BOUNDS.yMax)) //BUG-iki defa çalışıyor, tek görünmeli , 
+            setSnake([newHead, ...snake])  // neden newHead //BUG- yılan x ve y ekseninde tersine dönmemeli  kendi içinden geçermiş gibi görünüyor
             setScore(score + SCORE_INCREMENT)
         } else {
             setSnake([newHead, ...snake.slice(0, -1)])
