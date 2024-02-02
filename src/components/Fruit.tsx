@@ -15,9 +15,13 @@ const styles = StyleSheet.create({
     fruit: {
         // aşağıdaki style lar farkettirmedi , muhtemelen text elementi olduğu içindir , 
         // ama absolute neden farketmedi 
-        // width: 20,
-        // height: 20,
-        // borderRadius: 7,
-        // position: "absolute"
+        // width: 25,
+        // height : 25,
+        fontSize: normalize(25),
+        // backgroundColor: "red",
+        borderRadius: normalize(7),
+        textAlign: "center",
+        textAlignVertical: "center",
+        position: "absolute"
     }
 })

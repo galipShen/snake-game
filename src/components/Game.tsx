@@ -14,9 +14,9 @@ import normalize from 'react-native-normalize';
 
 export default function Game(): JSX.Element {
 
-    const SNAKE_INITIAL_POSITION = [{ x: 5, y: 5 }];
-    const FOOD_INITIAL_POSITION = { x: 5, y: 20 };
-    const GAME_BOUNDS = { xMin: 0, xMax: normalize(39.72), yMin: 0, yMax: normalize(72.72) };
+    const SNAKE_INITIAL_POSITION = [{ x: normalize(5), y: normalize(5) }];
+    const FOOD_INITIAL_POSITION = { x: normalize(5), y: normalize(20) };
+    const GAME_BOUNDS = { xMin: 0, xMax: normalize(39), yMin: 0, yMax: normalize(72) };
     const MOVE_INTERVAL = 50;
     const SCORE_INCREMENT = 10;
     const FIRST_FRUIT = "🍎"
@@ -62,7 +62,7 @@ export default function Game(): JSX.Element {
             default:
                 break;
         }
-        if (checkEatsFruit(newHead, food, 2)) {
+        if (checkEatsFruit(newHead, food, 3)) {
             setFruitEmoji(getRandomFruitEmoji())
             setFood(randomFruitPosition(GAME_BOUNDS.xMax, GAME_BOUNDS.yMax))
             setSnake([newHead, ...snake])
