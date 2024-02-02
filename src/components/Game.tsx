@@ -9,13 +9,14 @@ import { checkEatsFruit } from "../utils/checkEatsFruit";
 import Fruit from "./Fruit";
 import { randomFruitPosition } from "../utils/randomFruitPosition";
 import Header from "./Header";
+import { getRandomFruitEmoji } from "../utils/randomFruitEmoji";
 
 export default function Game(): JSX.Element {
 
     const SNAKE_INITIAL_POSITION = [{ x: 5, y: 5 }];
     const FOOD_INITIAL_POSITION = { x: 5, y: 20 };
-    const GAME_BOUNDS = { xMin: 0, xMax: 35, yMin: 0, yMax: 63 };
-    const MOVE_INTERVAL = 50; //MSEC
+    const GAME_BOUNDS = { xMin: 0, xMax: 38, yMin: 0, yMax: 70 };
+    const MOVE_INTERVAL = 50;
     const SCORE_INCREMENT = 10;
 
     const [direction, setDirection] = React.useState<Direction>(Direction.Right)
@@ -23,26 +24,25 @@ export default function Game(): JSX.Element {
         SNAKE_INITIAL_POSITION
     )
     const [food, setFood] = React.useState<Coordinate>(FOOD_INITIAL_POSITION)
+    const [fruitEmoji, setFruitEmoji] = React.useState<string>("🍓")
     const [isGameOver, setIsGameOver] = React.useState<boolean>(false)
     const [isPaused, setIsPaused] = React.useState<boolean>(false)
     const [score, setScore] = React.useState<number>(0)
-
     React.useEffect(() => {
         if (!isGameOver) {
             const intervalId = setInterval(() => {
                 !isPaused && moveSnake()
             }, MOVE_INTERVAL)
-            return () => clearInterval(intervalId)   /// buraya bak çlışma mantığına 
+            return () => clearInterval(intervalId)
         }
-    }, [isGameOver, isPaused, snake])
+    }, [isGameOver, isPaused, snake, fruitEmoji])
 
     const moveSnake = () => {
         const snakeHead = snake[0];
         const newHead = { ...snakeHead }
         if (checkGameOver(snakeHead, GAME_BOUNDS)) {
-            setIsGameOver((prev) => !prev)     //setIsGameOver(true) neden böyle kullanmadık
-            // bence önceki state i bilmezsek ve ona göre çalışmazsa sorun çıkar, bi önceki duruma göre devem etmiş olmayız
-            return   /// return to prevent keep continue
+            setIsGameOver((prev) => !prev)
+            return
         }
         switch (direction) {
             case Direction.Up:
@@ -61,14 +61,16 @@ export default function Game(): JSX.Element {
                 break;
         }
         if (checkEatsFruit(newHead, food, 2)) {
+            setFruitEmoji(getRandomFruitEmoji())
             setFood(randomFruitPosition(GAME_BOUNDS.xMax, GAME_BOUNDS.yMax))
-            setSnake([newHead, ...snake])  // neden newHead //BUG- yılan x ve y ekseninde tersine dönmemeli  kendi içinden geçermiş gibi görünüyor
+            setSnake([newHead, ...snake])
+            // BUG- yılan x ve y ekseninde tersine dönmemeli  kendi içinden geçermiş gibi görünüyor
             setScore(score + SCORE_INCREMENT)
+
         } else {
             setSnake([newHead, ...snake.slice(0, -1)])
         }
     }
-
 
     const handleGesture = (event: GestureEventType) => {
         const { translationX, translationY } = event.nativeEvent
@@ -91,13 +93,13 @@ export default function Game(): JSX.Element {
         setFood(FOOD_INITIAL_POSITION)
         setIsGameOver(false)
         setScore(0)
-        setDirection(Direction.Right),
-            setIsPaused(false)
+        setDirection(Direction.Right)
+        setIsPaused(false)
     }
     const pauseGame = () => {
         setIsPaused(prev => !prev)
     }
-
+    // console.log("---EATED--", snake)
     return (
         <PanGestureHandler onGestureEvent={handleGesture} >
             <SafeAreaView style={styles.container} >
@@ -106,13 +108,12 @@ export default function Game(): JSX.Element {
                 </Header>
                 <View style={styles.boundaries}>
                     <Snake snake={snake} />
-                    <Fruit x={food.x} y={food.y} />
+                    <Fruit x={food.x} y={food.y} fruitEmoji={fruitEmoji} />
                 </View>
             </SafeAreaView>
         </PanGestureHandler>
     )
 }
-//<SafeAreaView style={styles.container} ></SafeAreaView>
 const styles = StyleSheet.create({
     container: {
         flex: 1,
