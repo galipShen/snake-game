@@ -10,21 +10,23 @@ import Fruit from "./Fruit";
 import { randomFruitPosition } from "../utils/randomFruitPosition";
 import Header from "./Header";
 import { getRandomFruitEmoji } from "../utils/randomFruitEmoji";
+import normalize from 'react-native-normalize';
 
 export default function Game(): JSX.Element {
 
     const SNAKE_INITIAL_POSITION = [{ x: 5, y: 5 }];
     const FOOD_INITIAL_POSITION = { x: 5, y: 20 };
-    const GAME_BOUNDS = { xMin: 0, xMax: 38, yMin: 0, yMax: 70 };
+    const GAME_BOUNDS = { xMin: 0, xMax: normalize(39.72), yMin: 0, yMax: normalize(72.72) };
     const MOVE_INTERVAL = 50;
     const SCORE_INCREMENT = 10;
+    const FIRST_FRUIT = "🍎"
 
     const [direction, setDirection] = React.useState<Direction>(Direction.Right)
     const [snake, setSnake] = React.useState<Coordinate[]>(
         SNAKE_INITIAL_POSITION
     )
     const [food, setFood] = React.useState<Coordinate>(FOOD_INITIAL_POSITION)
-    const [fruitEmoji, setFruitEmoji] = React.useState<string>("🍓")
+    const [fruitEmoji, setFruitEmoji] = React.useState<string>(FIRST_FRUIT)
     const [isGameOver, setIsGameOver] = React.useState<boolean>(false)
     const [isPaused, setIsPaused] = React.useState<boolean>(false)
     const [score, setScore] = React.useState<number>(0)
@@ -122,10 +124,10 @@ const styles = StyleSheet.create({
     boundaries: {
         flex: 1,
         borderColor: Colors.primary,
-        borderWidth: 12,
+        borderWidth: normalize(12),
         backgroundColor: Colors.background,
-        borderBottomLeftRadius: 30,
-        borderBottomRightRadius: 30,
+        borderBottomLeftRadius: normalize(30),
+        borderBottomRightRadius: normalize(30),
 
     }
 });

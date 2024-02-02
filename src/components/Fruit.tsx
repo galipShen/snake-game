@@ -1,16 +1,13 @@
 import { StyleSheet, Text } from "react-native"
-import { Coordinate } from "../types/types"
+import { FruitProps } from "../types/types"
+import normalize from "react-native-normalize";
 
-interface FruitProps {
-    x: number;
-    y: number;
-    fruitEmoji: string
-}
+
 // 🍐  🥝  🍉 ☢️ 🍓 🍕
 export default function Fruit({ x, y, fruitEmoji }: FruitProps,): JSX.Element {
     const fruitMoveStyle = {
-        top: y * 10,
-        left: x * 10
+        top: y * normalize(10),
+        left: x * normalize(10)
     }
     return <Text style={[fruitMoveStyle, styles.fruit]}>{fruitEmoji}</Text>
 }
