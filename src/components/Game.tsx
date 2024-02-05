@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, Text, View, StatusBar, Button, Modal } from "react-native";
+import { StyleSheet, SafeAreaView, Text, View, StatusBar, Button, Modal, TouchableOpacity } from "react-native";
 import { Colors } from "../styles/colors";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { GestureEventType, Direction, Coordinate } from "../types/types";
@@ -11,6 +11,9 @@ import { randomFruitPosition } from "../utils/randomFruitPosition";
 import Header from "./Header";
 import { getRandomFruitEmoji } from "../utils/randomFruitEmoji";
 import normalize from 'react-native-normalize';
+import LottieView from 'lottie-react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import GameOverModal from "./GameOverModal";
 
 export default function Game(): JSX.Element {
 
@@ -43,6 +46,7 @@ export default function Game(): JSX.Element {
             return () => clearInterval(intervalId)
         }
     }, [isGameOver, isPaused, snake, fruitEmoji])
+
 
     const moveSnake = () => {
         const snakeHead = snake[0];
@@ -107,6 +111,10 @@ export default function Game(): JSX.Element {
     const pauseGame = () => {
         setIsPaused(prev => !prev)
     }
+    const hideModalAndReplay = () => {
+        hideGameOver()
+        replay()
+    }
     // console.log("---EATED--", snake)
     return (
         <PanGestureHandler onGestureEvent={handleGesture} >
@@ -115,19 +123,12 @@ export default function Game(): JSX.Element {
                 <Header replay={replay} isPaused={isPaused} score={score} pauseGame={pauseGame}>
                 </Header>
                 <View style={styles.boundaries}>
-                    <Button title="Show Modal" onPress={showGameOver} />
                     <Snake snake={snake} />
                     <Fruit x={food.x} y={food.y} fruitEmoji={fruitEmoji} />
-                    {/* show modal in boundaries  */}
-                    <Modal visible={showGameOverModal} transparent={true}  >
-                        <View style={styles.gameOverModalContainer}>
-                            <Text>Game Over MODAL</Text>
-                            <Button title="Close" onPress={hideGameOver} />
-                        </View>
-                    </Modal>
+                    <GameOverModal showGameOverModal={showGameOverModal} hideGameOver={hideGameOver} replay={replay} hideModalAndReplay={hideModalAndReplay} />
                 </View>
-            </SafeAreaView>
-        </PanGestureHandler>
+            </SafeAreaView >
+        </PanGestureHandler >
     )
 }
 const styles = StyleSheet.create({
@@ -145,7 +146,22 @@ const styles = StyleSheet.create({
 
     },
     gameOverModalContainer: {
-        backgroundColor: "#36531499",
+        backgroundColor: "#365314DD",
         flex: 1,
+    },
+    closeBox: {
+        alignItems: "flex-end",
+        // backgroundColor: "red",
+        width: "20%",
+
+    },
+    replayBox: {
+        flex: 0.2,
+        alignItems: "flex-start"
+    },
+    homeAndReplayBtn: {
+        // backgroundColor: "red",
+        flexDirection: "row",
+        justifyContent: "space-around"
     }
 });
