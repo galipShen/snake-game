@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, Text, View, StatusBar } from "react-native";
+import { StyleSheet, SafeAreaView, Text, View, StatusBar, Button, Modal } from "react-native";
 import { Colors } from "../styles/colors";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { GestureEventType, Direction, Coordinate } from "../types/types";
@@ -30,6 +30,11 @@ export default function Game(): JSX.Element {
     const [isGameOver, setIsGameOver] = React.useState<boolean>(false)
     const [isPaused, setIsPaused] = React.useState<boolean>(false)
     const [score, setScore] = React.useState<number>(0)
+    //modal
+    const [showGameOverModal, setShowGameOverModal] = React.useState<boolean>(false)
+    const showGameOver = () => { setShowGameOverModal(true) }
+    const hideGameOver = () => { setShowGameOverModal(false) }
+
     React.useEffect(() => {
         if (!isGameOver) {
             const intervalId = setInterval(() => {
@@ -44,6 +49,7 @@ export default function Game(): JSX.Element {
         const newHead = { ...snakeHead }
         if (checkGameOver(snakeHead, GAME_BOUNDS)) {
             setIsGameOver((prev) => !prev)
+            showGameOver()
             return
         }
         switch (direction) {
@@ -109,8 +115,16 @@ export default function Game(): JSX.Element {
                 <Header replay={replay} isPaused={isPaused} score={score} pauseGame={pauseGame}>
                 </Header>
                 <View style={styles.boundaries}>
+                    <Button title="Show Modal" onPress={showGameOver} />
                     <Snake snake={snake} />
                     <Fruit x={food.x} y={food.y} fruitEmoji={fruitEmoji} />
+                    {/* show modal in boundaries  */}
+                    <Modal visible={showGameOverModal} transparent={true}  >
+                        <View style={styles.gameOverModalContainer}>
+                            <Text>Game Over MODAL</Text>
+                            <Button title="Close" onPress={hideGameOver} />
+                        </View>
+                    </Modal>
                 </View>
             </SafeAreaView>
         </PanGestureHandler>
@@ -129,5 +143,9 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: normalize(30),
         borderBottomRightRadius: normalize(30),
 
+    },
+    gameOverModalContainer: {
+        backgroundColor: "#36531499",
+        flex: 1,
     }
 });
