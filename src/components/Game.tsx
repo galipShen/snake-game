@@ -45,7 +45,6 @@ export default function Game(): JSX.Element {
 
     React.useEffect(() => {
         if (!isGameOver) {
-            // console.log(hearts)
             const intervalId = setInterval(() => {
                 !isPaused && moveSnake()
             }, MOVE_INTERVAL)
@@ -61,7 +60,7 @@ export default function Game(): JSX.Element {
             setIsGameOver((prev) => !prev)
             substractHeart()
             if (hearts.length !== 0) {
-                setTimeout(() => replay(), 2000)
+                setTimeout(() => replay(), 1000)
             } else { showGameOver() }
             return
         }
@@ -175,16 +174,15 @@ const styles = StyleSheet.create({
         alignItems: "flex-start"
     },
     homeAndReplayBtn: {
-        // backgroundColor: "red",
         flexDirection: "row",
         justifyContent: "space-around"
     },
     heartsContainer: {
-        backgroundColor: "yellow",
         flexDirection: "row",
         width: "40%",
     },
     heartStyle: {
-        fontSize: normalize(35)
+        fontSize: normalize(35),
+        marginBottom: 5
     }
 });

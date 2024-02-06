@@ -33,9 +33,9 @@ export default function GameOverModal({ showGameOverModal, hideGameOver, replay,
                     style={{ width: "100%", height: "40%" }}
                 />
                 <View style={styles.homeAndReplayBtn}>
-                    <TouchableOpacity onPress={replay} style={styles.replayBox} >
+                    {/* <TouchableOpacity onPress={replay} style={styles.replayBox} >
                         <MaterialIcons name="home" size={normalize(70)} color={Colors.background} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TouchableOpacity onPress={hideModalAndReplay} style={styles.replayBox} >
                         <MaterialIcons name="replay-circle-filled" size={normalize(70)} color={Colors.background} />
                     </TouchableOpacity>
