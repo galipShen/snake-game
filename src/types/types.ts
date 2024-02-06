@@ -20,6 +20,7 @@ export interface HeaderProps {
     isPaused: boolean;
     pauseGame: () => void;
     score: number;
+    children: JSX.Element;
 }
 
 export enum Direction {

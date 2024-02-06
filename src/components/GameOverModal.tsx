@@ -1,15 +1,6 @@
 import * as React from "react";
 import { StyleSheet, SafeAreaView, Text, View, StatusBar, Button, Modal, TouchableOpacity } from "react-native";
 import { Colors } from "../styles/colors";
-import { PanGestureHandler } from "react-native-gesture-handler";
-import { GestureEventType, Direction, Coordinate } from "../types/types";
-import Snake from "./Snake";
-import { checkGameOver } from "../utils/checkGameOver";
-import { checkEatsFruit } from "../utils/checkEatsFruit";
-import Fruit from "./Fruit";
-import { randomFruitPosition } from "../utils/randomFruitPosition";
-import Header from "./Header";
-import { getRandomFruitEmoji } from "../utils/randomFruitEmoji";
 import normalize from 'react-native-normalize';
 import LottieView from 'lottie-react-native';
 import { MaterialIcons } from '@expo/vector-icons';

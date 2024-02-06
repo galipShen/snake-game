@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, Text, View, StatusBar, Button, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, SafeAreaView, Text, View, StatusBar, Button, Modal, TouchableOpacity, Pressable } from "react-native";
 import { Colors } from "../styles/colors";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { GestureEventType, Direction, Coordinate } from "../types/types";
@@ -14,6 +14,7 @@ import normalize from 'react-native-normalize';
 import LottieView from 'lottie-react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import GameOverModal from "./GameOverModal";
+import { array } from "prop-types";
 
 export default function Game(): JSX.Element {
 
@@ -23,6 +24,9 @@ export default function Game(): JSX.Element {
     const MOVE_INTERVAL = 50;
     const SCORE_INCREMENT = 10;
     const FIRST_FRUIT = "🍎"
+    const HEARTS_INITIAL = ["💓", "💓", "💓"]
+    // turn  broken hearts to semi transparent
+
 
     const [direction, setDirection] = React.useState<Direction>(Direction.Right)
     const [snake, setSnake] = React.useState<Coordinate[]>(
@@ -33,6 +37,7 @@ export default function Game(): JSX.Element {
     const [isGameOver, setIsGameOver] = React.useState<boolean>(false)
     const [isPaused, setIsPaused] = React.useState<boolean>(false)
     const [score, setScore] = React.useState<number>(0)
+    const [hearts, setHearts] = React.useState<string[]>(HEARTS_INITIAL)
     //modal
     const [showGameOverModal, setShowGameOverModal] = React.useState<boolean>(false)
     const showGameOver = () => { setShowGameOverModal(true) }
@@ -40,12 +45,13 @@ export default function Game(): JSX.Element {
 
     React.useEffect(() => {
         if (!isGameOver) {
+            // console.log(hearts)
             const intervalId = setInterval(() => {
                 !isPaused && moveSnake()
             }, MOVE_INTERVAL)
             return () => clearInterval(intervalId)
         }
-    }, [isGameOver, isPaused, snake, fruitEmoji])
+    }, [isGameOver, isPaused, snake, fruitEmoji, hearts])
 
 
     const moveSnake = () => {
@@ -53,7 +59,10 @@ export default function Game(): JSX.Element {
         const newHead = { ...snakeHead }
         if (checkGameOver(snakeHead, GAME_BOUNDS)) {
             setIsGameOver((prev) => !prev)
-            showGameOver()
+            substractHeart()
+            if (hearts.length !== 0) {
+                setTimeout(() => replay(), 2000)
+            } else { showGameOver() }
             return
         }
         switch (direction) {
@@ -114,13 +123,19 @@ export default function Game(): JSX.Element {
     const hideModalAndReplay = () => {
         hideGameOver()
         replay()
+        setHearts(HEARTS_INITIAL)
     }
-    // console.log("---EATED--", snake)
+    const substractHeart = () => {
+        const heartsDiminished = hearts.shift()
+    }
     return (
         <PanGestureHandler onGestureEvent={handleGesture} >
             <SafeAreaView style={styles.container} >
                 <StatusBar barStyle={"light-content"} backgroundColor={Colors.primary} />
                 <Header replay={replay} isPaused={isPaused} score={score} pauseGame={pauseGame}>
+                    <View style={styles.heartsContainer}>
+                        {hearts.map((item, index) => (<Text key={index} style={styles.heartStyle}>{item}</Text>))}
+                    </View>
                 </Header>
                 <View style={styles.boundaries}>
                     <Snake snake={snake} />
@@ -163,5 +178,13 @@ const styles = StyleSheet.create({
         // backgroundColor: "red",
         flexDirection: "row",
         justifyContent: "space-around"
+    },
+    heartsContainer: {
+        backgroundColor: "yellow",
+        flexDirection: "row",
+        width: "40%",
+    },
+    heartStyle: {
+        fontSize: normalize(35)
     }
 });

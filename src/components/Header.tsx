@@ -1,14 +1,15 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import React from 'react'
+import React, { Children } from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Colors } from "../styles/colors";
 import { HeaderProps } from "../types/types";
 import normalize from "react-native-normalize";
 
-export default function Header({ replay, isPaused, score, pauseGame }: HeaderProps): JSX.Element {
+export default function Header({ replay, isPaused, score, pauseGame, children }: HeaderProps): JSX.Element {
     return (
         <View style={styles.container} >
+            {children}
             <TouchableOpacity onPress={replay} style={styles.replayBox} >
                 <MaterialIcons name="replay-circle-filled" size={normalize(35)} color={Colors.primary} />
             </TouchableOpacity>
