@@ -14,7 +14,6 @@ import normalize from 'react-native-normalize';
 import LottieView from 'lottie-react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import GameOverModal from "./GameOverModal";
-import { array } from "prop-types";
 
 export default function Game(): JSX.Element {
 
@@ -25,8 +24,6 @@ export default function Game(): JSX.Element {
     const SCORE_INCREMENT = 10;
     const FIRST_FRUIT = "🍎"
     const HEARTS_INITIAL = ["💓", "💓", "💓"]
-    // turn  broken hearts to semi transparent
-
 
     const [direction, setDirection] = React.useState<Direction>(Direction.Right)
     const [snake, setSnake] = React.useState<Coordinate[]>(
@@ -42,6 +39,7 @@ export default function Game(): JSX.Element {
     const [showGameOverModal, setShowGameOverModal] = React.useState<boolean>(false)
     const showGameOver = () => { setShowGameOverModal(true) }
     const hideGameOver = () => { setShowGameOverModal(false) }
+
 
     React.useEffect(() => {
         if (!isGameOver) {
@@ -165,9 +163,7 @@ const styles = StyleSheet.create({
     },
     closeBox: {
         alignItems: "flex-end",
-        // backgroundColor: "red",
         width: "20%",
-
     },
     replayBox: {
         flex: 0.2,
