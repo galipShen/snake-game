@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, Text, View, StatusBar, Button, Modal, TouchableOpacity } from "react-native";
+import { StyleSheet, View, StatusBar, Button, Modal, TouchableOpacity } from "react-native";
 import { Colors } from "../styles/colors";
 import normalize from 'react-native-normalize';
 import LottieView from 'lottie-react-native';
@@ -17,9 +17,9 @@ export default function GameOverModal({ showGameOverModal, hideGameOver, replay,
     return (
         <Modal visible={showGameOverModal} transparent={true} onRequestClose={hideGameOver} >
             <View style={styles.gameOverModalContainer}>
-                <TouchableOpacity onPress={hideGameOver} style={styles.closeBox} >
+                {/* <TouchableOpacity onPress={hideGameOver} style={styles.closeBox} >
                     <MaterialIcons name="close" size={normalize(70)} color={Colors.background} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <LottieView
                     autoPlay
                     loop

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, SafeAreaView, Text, View, StatusBar, Button, Modal, TouchableOpacity, Pressable } from "react-native";
+import { StyleSheet, SafeAreaView, Text, View, StatusBar, ImageBackground, Button, Modal, TouchableOpacity, Pressable } from "react-native";
 import { Colors } from "../styles/colors";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { GestureEventType, Direction, Coordinate } from "../types/types";
@@ -11,8 +11,6 @@ import { randomFruitPosition } from "../utils/randomFruitPosition";
 import Header from "./Header";
 import { getRandomFruitEmoji } from "../utils/randomFruitEmoji";
 import normalize from 'react-native-normalize';
-import LottieView from 'lottie-react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import GameOverModal from "./GameOverModal";
 
 export default function Game(): JSX.Element {
@@ -125,6 +123,7 @@ export default function Game(): JSX.Element {
     const substractHeart = () => {
         const heartsDiminished = hearts.shift()
     }
+
     return (
         <PanGestureHandler onGestureEvent={handleGesture} >
             <SafeAreaView style={styles.container} >
@@ -135,9 +134,11 @@ export default function Game(): JSX.Element {
                     </View>
                 </Header>
                 <View style={styles.boundaries}>
-                    <Snake snake={snake} />
-                    <Fruit x={food.x} y={food.y} fruitEmoji={fruitEmoji} />
-                    <GameOverModal showGameOverModal={showGameOverModal} hideGameOver={hideGameOver} replay={replay} hideModalAndReplay={hideModalAndReplay} />
+                    <ImageBackground source={require("../images/snake.jpg")} resizeMode="cover" style={styles.image}>
+                        <Snake snake={snake} />
+                        <Fruit x={food.x} y={food.y} fruitEmoji={fruitEmoji} />
+                        <GameOverModal showGameOverModal={showGameOverModal} hideGameOver={hideGameOver} replay={replay} hideModalAndReplay={hideModalAndReplay} />
+                    </ImageBackground>
                 </View>
             </SafeAreaView >
         </PanGestureHandler >
@@ -180,5 +181,10 @@ const styles = StyleSheet.create({
     heartStyle: {
         fontSize: normalize(35),
         marginBottom: 5
+    },
+    image: {
+        flex: 1,
+        justifyContent: 'center',
+
     }
 });
