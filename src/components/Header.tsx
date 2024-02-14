@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     scoreBox: {
-        flex: 0.2,
-        alignItems: "flex-end"
+        flex: 0.3,
+        alignItems: "flex-end",
     },
     scoreText: {
         fontSize: normalize(32),
