@@ -4,12 +4,12 @@
     "slug": "snake-game",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#22292F"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,12 +19,9 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+
+        "backgroundColor": "#22292F"
       }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
   }
 }

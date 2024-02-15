@@ -22,6 +22,9 @@ export interface HeaderProps {
     score: number;
     children: JSX.Element;
 }
+export interface StartGameProps {
+    startGame: () => void;
+}
 
 export enum Direction {
     Right,
