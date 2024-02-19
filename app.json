@@ -4,10 +4,8 @@
     "slug": "snake-game",
     "version": "1.0.0",
     "orientation": "portrait",
-
     "userInterfaceStyle": "light",
     "splash": {
-
       "resizeMode": "contain",
       "backgroundColor": "#22292F"
     },
@@ -19,8 +17,13 @@
     },
     "android": {
       "adaptiveIcon": {
-
         "backgroundColor": "#22292F"
+      },
+      "package": "com.galipshen.snakegame"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5e35b0f0-3e46-46b0-92f5-74cbaee4ed95"
       }
     }
   }
