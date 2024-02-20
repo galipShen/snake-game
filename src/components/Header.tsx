@@ -30,7 +30,7 @@ export default function Header({ replay, isPaused, score, pauseGame, children }:
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0.1,
+        flex: 0.15,
         flexDirection: "row",
         backgroundColor: Colors.background,
         justifyContent: "space-between",
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
         marginHorizontal: normalize(12),
         alignItems: "center",
         marginTop: normalize(20),
+        // marginBottom: normalize(20),
         paddingHorizontal: normalize(20),
     },
     replayBox: {

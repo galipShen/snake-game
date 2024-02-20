@@ -4,8 +4,10 @@ import Game from "./src/components/Game";
 import { useState, useEffect, useCallback } from "react";
 import AnimationSplashScreen from "./src/components/AnimationSplashScreen";
 
+
 const App = () => {
     const [appIsReady, setAppIsReady] = useState<boolean>(false);
+
 
     useEffect(() => {
         setAppIsReady(appIsReady)

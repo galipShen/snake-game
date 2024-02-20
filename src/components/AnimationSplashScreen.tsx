@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.splash,
     },
     playGame: {
-        top: -200,
+        top: normalize(-200, "height"),
         alignItems: "center"
     },
     playGameText: {
