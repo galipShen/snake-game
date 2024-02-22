@@ -10,14 +10,14 @@ import Fruit from "./Fruit";
 import { randomFruitPosition } from "../utils/randomFruitPosition";
 import Header from "./Header";
 import { getRandomFruitEmoji } from "../utils/randomFruitEmoji";
-import normalize from 'react-native-normalize';
+import normalize, { SCREEN_HEIGHT, SCREEN_WIDTH } from 'react-native-normalize';
 import GameOverModal from "./GameOverModal";
 
 export default function Game(): JSX.Element {
 
     const SNAKE_INITIAL_POSITION = [{ x: normalize(5), y: normalize(5) }];
     const FOOD_INITIAL_POSITION = { x: normalize(5), y: normalize(20) };
-    const GAME_BOUNDS = { xMin: 0, xMax: normalize(39), yMin: 0, yMax: normalize(72) };
+    const GAME_BOUNDS = { xMin: 0, xMax: SCREEN_WIDTH, yMin: 0, yMax: SCREEN_HEIGHT };
     const MOVE_INTERVAL = 50;
     const SCORE_INCREMENT = 10;
     const FIRST_FRUIT = "🍎"

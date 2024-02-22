@@ -15,6 +15,7 @@ export default function Snake({ snake }: SnakeProps): JSX.Element {
         <Fragment>
             {snake.map((segment: Coordinate, index: number) => {
                 const segmentStyle = {
+                    // bir değerle çarpmadığım durumda bounds düzgün çalışyır
                     left: segment.x * normalize(10),
                     top: segment.y * normalize(10)
                 };
