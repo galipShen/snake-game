@@ -14,7 +14,7 @@ import normalize, { SCREEN_HEIGHT, SCREEN_WIDTH } from 'react-native-normalize';
 import GameOverModal from "./GameOverModal";
 
 export default function Game(): JSX.Element {
-
+    //test
     const SNAKE_INITIAL_POSITION = [{ x: normalize(5), y: normalize(5) }];
     const FOOD_INITIAL_POSITION = { x: normalize(5), y: normalize(20) };
     const GAME_BOUNDS = { xMin: 0, xMax: SCREEN_WIDTH, yMin: 0, yMax: SCREEN_HEIGHT };
